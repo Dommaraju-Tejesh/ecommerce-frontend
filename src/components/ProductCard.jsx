@@ -1,29 +1,20 @@
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ product }) => {
+export default function ProductCard({ product }) {
   return (
-    <div className="col-md-3 mb-4">
-      <div className="card h-100">
-        {product.image && (
-          <img
-            src={product.image}
-            className="card-img-top"
-            alt={product.name}
-          />
-        )}
-
-        <div className="card-body">
-          <h5>{product.name}</h5>
-          <p>₹{product.price}</p>
-
-          <Link to={`/product/${product.id}`} className="btn btn-primary">
-            View
-          </Link>
-        </div>
-      </div>
+    <div style={card}>
+      <img src={product.image} alt="" width="200" />
+      <h3>{product.name}</h3>
+      <p>Rs {product.price}</p>
+      <Link to={`/product/${product.id}`}>View More</Link>
     </div>
   );
-};
+}
 
-export default ProductCard;
+const card = {
+  border: "1px solid #ccc",
+  padding: "10px",
+  margin: "10px",
+  width: "250px",
+};
 

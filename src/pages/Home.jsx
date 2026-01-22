@@ -1,12 +1,22 @@
+import { useEffect, useState } from "react";
+import api from "../api/axios";
 import ProductCard from "../components/ProductCard";
 
-const Home = () => {
-  return (
-    <>
-      <h2>Products</h2>
-      <ProductCard />
-    </>
-  );
-};
+export default function Home() {
+  const [products, setProducts] = useState([]);
 
-export default Home;
+  useEffect(() => {
+    api.get("/api/products/").then((res) => setProducts(res.data));
+  }, []);
+
+  return (
+    <div>
+      <h1 style={{ textAlign: "center" }}>LATEST PRODUCTS</h1>
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+        {products.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
+      </div>
+    </div>
+  );
+}

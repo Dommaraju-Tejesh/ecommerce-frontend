@@ -1,2 +1,7 @@
-const Cart = () => <h2>Cart Page</h2>;
-export default Cart;
+export default function Cart() {
+  return (
+    <div>
+      <h1>CART ITEMS</h1>
+    </div>
+  );
+}

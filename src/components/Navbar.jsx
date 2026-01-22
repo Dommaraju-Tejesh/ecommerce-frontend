@@ -1,14 +1,24 @@
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+export default function Navbar() {
   return (
-    <nav style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
-      <Link to="/" style={{ marginRight: "15px" }}>Products</Link>
-      <Link to="/cart" style={{ marginRight: "15px" }}>Cart</Link>
-      <Link to="/login" style={{ marginRight: "15px" }}>Login</Link>
-      <Link to="/signup">Signup</Link>
+    <nav style={nav}>
+      <h2>Ecommerce Guvi Shop</h2>
+      <div>
+        <Link to="/">HOME</Link>
+        <Link to="/cart">CART</Link>
+        <Link to="/checkout">CHECKOUT</Link>
+        <Link to="/signup">SIGNUP</Link>
+        <Link to="/login">LOGIN</Link>
+      </div>
     </nav>
   );
-};
+}
 
-export default Navbar;
+const nav = {
+  display: "flex",
+  justifyContent: "space-between",
+  padding: "15px",
+  background: "#222",
+  color: "white",
+};
