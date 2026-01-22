@@ -1,37 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import ProductDetails from "./pages/ProductDetails";
-import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { CartProvider } from "./context/CartContext";
-import { AuthProvider } from "./context/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Cart from "./pages/Cart";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+    <Router>
+      <Navbar />   {/* ✅ ALWAYS VISIBLE */}
 
-            {/* 🔒 PROTECTED */}
-            <Route
-              path="/cart"
-              element={
-                <ProtectedRoute>
-                  <Cart />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </CartProvider>
-    </AuthProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Register />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </Router>
   );
 }
 
