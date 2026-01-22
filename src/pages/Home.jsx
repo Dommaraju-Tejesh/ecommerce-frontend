@@ -7,18 +7,26 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .get("/api/products/")
-      .then((res) => {
-        if (Array.isArray(res.data)) {
-          setProducts(res.data);
-        } else {
-          setProducts([]);
-        }
-      })
-      .catch(() => setProducts([]))
-      .finally(() => setLoading(false));
-  }, []);
+  api
+    .get("/api/products/")
+    .then((res) => {
+      const data = res.data;
+
+      // Handle Django REST pagination
+      if (data.results && Array.isArray(data.results)) {
+        setProducts(data.results);
+      }
+      // In case you disable pagination later
+      else if (Array.isArray(data)) {
+        setProducts(data);
+      } else {
+        setProducts([]);
+      }
+    })
+    .catch(() => setProducts([]))
+    .finally(() => setLoading(false));
+}, []);
+
 
   return (
     <div>
