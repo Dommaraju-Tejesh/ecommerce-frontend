@@ -1,10 +1,10 @@
-import Products from "../components/Products";
+import ProductCard from "../components/ProductCard";
 
 const Home = () => {
   return (
     <>
       <h2>Products</h2>
-      <Products />
+      <ProductCard />
     </>
   );
 };
