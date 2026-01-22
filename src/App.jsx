@@ -1,20 +1,23 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+
 import Home from "./pages/Home";
+import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Cart from "./pages/Cart";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <Router>
-      <Navbar />   {/* ✅ ALWAYS VISIBLE */}
+      {/* NAVBAR ALWAYS ON TOP */}
+      <Navbar />
 
+      {/* PAGE CONTENT BELOW NAVBAR */}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Register />} />
-        <Route path="/cart" element={<Cart />} />
       </Routes>
     </Router>
   );
