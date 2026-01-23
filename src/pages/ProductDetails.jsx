@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import api from "../api/axios";
+import { CartContext } from "../context/CartContext";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     api.get(`/api/products/${id}/`).then((res) => setProduct(res.data));
@@ -30,8 +32,9 @@ export default function ProductDetails() {
       <p>{product.description}</p>
       <h3>Rs {product.price}</h3>
 
-      <button>Add to Cart</button>
+      <button onClick={() => addToCart(product)}>
+        Add to Cart
+      </button>
     </div>
   );
 }
-
