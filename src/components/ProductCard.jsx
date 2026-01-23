@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 
 export default function ProductCard({ product }) {
-  // safety check
   if (!product) return null;
 
-  const imageUrl = product.image
-    ? `${product.image.startsWith("http") ? "" : process.env.REACT_APP_API_URL}${product.image}`
-    : "";
+  let imageUrl = "";
+
+  if (product.image) {
+    if (product.image.startsWith("http")) {
+      imageUrl = product.image;
+    } else {
+      imageUrl = `${process.env.REACT_APP_API_URL}${product.image}`;
+    }
+  }
 
   return (
     <div style={card}>
