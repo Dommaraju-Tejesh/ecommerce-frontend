@@ -4,18 +4,32 @@ import api from "../api/axios";
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     api.get(`/api/products/${id}/`).then((res) => setProduct(res.data));
   }, [id]);
 
+  if (!product) return <p>Loading...</p>;
+
+  let imageUrl = "";
+
+  if (product.image) {
+    if (product.image.startsWith("http")) {
+      imageUrl = product.image;
+    } else {
+      imageUrl = `${process.env.REACT_APP_API_URL}${product.image}`;
+    }
+  }
+
   return (
     <div style={{ padding: "20px" }}>
-      <img src={product.image} width="300" />
+      {imageUrl && <img src={imageUrl} alt={product.name} width="300" />}
+
       <h2>{product.name}</h2>
       <p>{product.description}</p>
       <h3>Rs {product.price}</h3>
+
       <button>Add to Cart</button>
     </div>
   );
