@@ -6,7 +6,12 @@ export default function Checkout() {
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const itemsPrice = cart.reduce((acc, item) => acc + item.price, 0);
+  // 🔥 convert string price to number
+  const itemsPrice = cart.reduce(
+    (acc, item) => acc + Number(item.price),
+    0
+  );
+
   const taxPrice = itemsPrice * 0.1;
   const totalPrice = itemsPrice + taxPrice;
 
