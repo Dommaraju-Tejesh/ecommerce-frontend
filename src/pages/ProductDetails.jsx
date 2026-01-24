@@ -32,9 +32,22 @@ export default function ProductDetails() {
       <p>{product.description}</p>
       <h3>Rs {product.price}</h3>
 
-      <button onClick={() => addToCart(product)}>
-        Add to Cart
-      </button>
+      <button
+  onClick={() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first");
+      window.location.href = "/login";
+      return;
+    }
+
+    addToCart(product);
+  }}
+>
+  Add to Cart
+</button>
+
     </div>
   );
 }
