@@ -14,26 +14,27 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <div style={card}>
+    <div className="card h-100 shadow-sm">
       {imageUrl && (
         <img
           src={imageUrl}
+          className="card-img-top"
           alt={product.name}
-          style={{ width: "100%", height: "200px", objectFit: "cover" }}
+          style={{ height: "220px", objectFit: "cover" }}
         />
       )}
 
-      <h3>{product.name}</h3>
-      <p>Rs {product.price}</p>
+      <div className="card-body d-flex flex-column">
+        <h5 className="card-title">{product.name}</h5>
+        <h6 className="text-success mb-3">Rs {product.price}</h6>
 
-      <Link to={`/product/${product.id}`}>View More</Link>
+        <Link
+          to={`/product/${product.id}`}
+          className="btn btn-dark mt-auto"
+        >
+          View Details
+        </Link>
+      </div>
     </div>
   );
 }
-
-const card = {
-  border: "1px solid #ccc",
-  padding: "10px",
-  margin: "10px",
-  width: "250px",
-};

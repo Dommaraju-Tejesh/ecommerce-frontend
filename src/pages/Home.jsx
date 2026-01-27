@@ -7,46 +7,42 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  api
-    .get("/api/products/")
-    .then((res) => {
-      const data = res.data;
+    api
+      .get("/api/products/")
+      .then((res) => {
+        const data = res.data;
 
-      // Handle Django REST pagination
-      if (data.results && Array.isArray(data.results)) {
-        setProducts(data.results);
-      }
-      // In case you disable pagination later
-      else if (Array.isArray(data)) {
-        setProducts(data);
-      } else {
-        setProducts([]);
-      }
-    })
-    .catch(() => setProducts([]))
-    .finally(() => setLoading(false));
-}, []);
-
+        if (data.results && Array.isArray(data.results)) {
+          setProducts(data.results);
+        } else if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          setProducts([]);
+        }
+      })
+      .catch(() => setProducts([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
-    <div>
-      <h1 style={{ textAlign: "center" }}>LATEST PRODUCTS</h1>
+    <div className="container mt-5">
+      <h2 className="text-center mb-4 fw-bold">Latest Products</h2>
 
-      {loading && <p style={{ textAlign: "center" }}>Loading products...</p>}
-
-      {!loading && products.length === 0 && (
-        <p style={{ textAlign: "center" }}>No products available</p>
+      {loading && (
+        <p className="text-center fs-5">Loading products...</p>
       )}
 
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
+      {!loading && products.length === 0 && (
+        <p className="text-center fs-5">No products available</p>
+      )}
+
+      <div className="row">
         {products.map((p) =>
-          p && p.id ? <ProductCard key={p.id} product={p} /> : null
+          p && p.id ? (
+            <div key={p.id} className="col-md-4 col-sm-6 mb-4">
+              <ProductCard product={p} />
+            </div>
+          ) : null
         )}
       </div>
     </div>

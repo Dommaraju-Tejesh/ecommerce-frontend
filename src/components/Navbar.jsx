@@ -18,42 +18,77 @@ export default function Navbar() {
   };
 
   return (
-    <nav style={nav}>
-      <h2>Ecommerce Shop</h2>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+      <div className="container">
+        <Link className="navbar-brand fw-bold" to="/">
+          🛒 Ecommerce Shop
+        </Link>
 
-      <div style={{ display: "flex", gap: "15px" }}>
-        <Link to="/">HOME</Link>
-        <Link to="/cart">CART</Link>
-        <Link to="/checkout">CHECKOUT</Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarsExample"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-        {!user ? (
-          <>
-            <Link to="/signup">SIGNUP</Link>
-            <Link to="/login">LOGIN</Link>
-          </>
-        ) : (
-          <>
-            <span style={{ cursor: "pointer" }}>
-              WELCOME {user.email}
-            </span>
-            <Link to="/profile">PROFILE</Link>
-            <span
-              onClick={logoutHandler}
-              style={{ cursor: "pointer", color: "red" }}
-            >
-              LOGOUT
-            </span>
-          </>
-        )}
+        <div className="collapse navbar-collapse" id="navbarsExample">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">Home</Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/cart">Cart</Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/checkout">Checkout</Link>
+            </li>
+
+            {!user ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/signup">Signup</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Login</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item dropdown">
+                  <span
+                    className="nav-link dropdown-toggle"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                  >
+                    Welcome {user.email}
+                  </span>
+
+                  <ul className="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <Link className="dropdown-item" to="/profile">
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <span
+                        className="dropdown-item text-danger"
+                        onClick={logoutHandler}
+                        style={{ cursor: "pointer" }}
+                      >
+                        Logout
+                      </span>
+                    </li>
+                  </ul>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       </div>
     </nav>
   );
 }
-
-const nav = {
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "15px",
-  background: "#222",
-  color: "white",
-};
