@@ -5,7 +5,7 @@ export default function Payment() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    localStorage.setItem("paymentMethod", "Cash On Delivery");
+    localStorage.setItem("paymentMethod", "Cash on Delivery");
     navigate("/placeorder");
   };
 
@@ -14,8 +14,7 @@ export default function Payment() {
       <h2>Select Method</h2>
 
       <form onSubmit={submitHandler}>
-        <input type="radio" checked readOnly />
-        <label> Cash On Delivery</label>
+        <input type="radio" checked readOnly /> Cash on Delivery
         <br /><br />
         <button type="submit">CONTINUE</button>
       </form>

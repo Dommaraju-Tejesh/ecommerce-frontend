@@ -26,6 +26,7 @@ export default function Checkout() {
 
       <form onSubmit={submitHandler} style={{ maxWidth: "400px" }}>
         <input
+          required
           placeholder="Enter address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
@@ -33,6 +34,7 @@ export default function Checkout() {
         <br /><br />
 
         <input
+          required
           placeholder="Enter city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
@@ -40,6 +42,7 @@ export default function Checkout() {
         <br /><br />
 
         <input
+          required
           placeholder="Enter postal code"
           value={pincode}
           onChange={(e) => setPincode(e.target.value)}
@@ -47,6 +50,7 @@ export default function Checkout() {
         <br /><br />
 
         <input
+          required
           placeholder="Enter country"
           value={country}
           onChange={(e) => setCountry(e.target.value)}

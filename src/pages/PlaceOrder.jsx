@@ -1,37 +1,48 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 export default function PlaceOrder() {
   const { cart } = useContext(CartContext);
+  const navigate = useNavigate();
 
-  const shipping = JSON.parse(localStorage.getItem("shippingAddress"));
-  const payment = localStorage.getItem("paymentMethod");
+  const shippingAddress = JSON.parse(
+    localStorage.getItem("shippingAddress")
+  );
 
   const itemsPrice = cart.reduce(
-    (acc, item) => acc + Number(item.price) * item.qty,
+    (acc, item) => acc + item.price * item.qty,
     0
   );
 
-  const tax = itemsPrice * 0.1;
-  const total = itemsPrice + tax;
+  const taxPrice = itemsPrice * 0.1;
+  const totalPrice = itemsPrice + taxPrice;
 
-  const placeOrder = () => {
-    alert("Order Placed Successfully!");
+  const placeOrderHandler = () => {
+    const order = {
+      id: Date.now(),
+      cart,
+      shippingAddress,
+      totalPrice,
+    };
+
+    localStorage.setItem("lastOrder", JSON.stringify(order));
+    navigate(`/order/${order.id}`);
   };
 
   return (
-    <div style={{ padding: "40px", display: "flex", gap: "50px" }}>
+    <div style={{ display: "flex", padding: "40px", gap: "50px" }}>
       <div style={{ flex: 2 }}>
         <h2>SHIPPING</h2>
-        <p>{shipping.address}, {shipping.city}</p>
-
-        <h2>PAYMENT METHOD</h2>
-        <p>{payment}</p>
+        <p>
+          {shippingAddress.address}, {shippingAddress.city},{" "}
+          {shippingAddress.pincode}, {shippingAddress.country}
+        </p>
 
         <h2>ORDER ITEMS</h2>
         {cart.map((item) => (
           <p key={item.id}>
-            {item.name} — {item.qty} × Rs {item.price}
+            {item.name} — {item.qty} x Rs {item.price}
           </p>
         ))}
       </div>
@@ -39,10 +50,12 @@ export default function PlaceOrder() {
       <div style={{ flex: 1 }}>
         <h2>ORDER SUMMARY</h2>
         <p>Items: Rs {itemsPrice}</p>
-        <p>Tax: Rs {tax}</p>
-        <h3>Total: Rs {total}</h3>
+        <p>Tax: Rs {taxPrice}</p>
+        <h3>Total: Rs {totalPrice}</h3>
 
-        <button onClick={placeOrder}>PLACE ORDER</button>
+        <button onClick={placeOrderHandler}>
+          PLACE ORDER
+        </button>
       </div>
     </div>
   );
