@@ -21,44 +21,60 @@ export default function Checkout() {
   };
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h2>SHIPPING</h2>
+    <div className="container mt-5">
+      <div className="card shadow p-4 mx-auto" style={{ maxWidth: "600px" }}>
+        <h3 className="mb-4 text-center">Shipping Address</h3>
 
-      <form onSubmit={submitHandler} style={{ maxWidth: "400px" }}>
-        <input
-          required
-          placeholder="Enter address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <br /><br />
+        <form onSubmit={submitHandler}>
+          <div className="mb-3">
+            <label className="form-label">Address</label>
+            <input
+              className="form-control"
+              required
+              placeholder="Enter address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
 
-        <input
-          required
-          placeholder="Enter city"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-        <br /><br />
+          <div className="mb-3">
+            <label className="form-label">City</label>
+            <input
+              className="form-control"
+              required
+              placeholder="Enter city"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
 
-        <input
-          required
-          placeholder="Enter postal code"
-          value={pincode}
-          onChange={(e) => setPincode(e.target.value)}
-        />
-        <br /><br />
+          <div className="mb-3">
+            <label className="form-label">Postal Code</label>
+            <input
+              className="form-control"
+              required
+              placeholder="Enter postal code"
+              value={pincode}
+              onChange={(e) => setPincode(e.target.value)}
+            />
+          </div>
 
-        <input
-          required
-          placeholder="Enter country"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-        />
-        <br /><br />
+          <div className="mb-3">
+            <label className="form-label">Country</label>
+            <input
+              className="form-control"
+              required
+              placeholder="Enter country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            />
+          </div>
 
-        <button type="submit">CONTINUE</button>
-      </form>
+          <button type="submit" className="btn btn-dark w-100">
+            Continue
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
