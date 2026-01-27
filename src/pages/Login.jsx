@@ -8,34 +8,29 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-  try {
-    const res = await api.post("/api/token/", {
-      username: email,
-      password,
-    });
+    try {
+      const res = await api.post("/api/token/", {
+        username: email,
+        password,
+      });
 
-    const token = res.data.access;
-    localStorage.setItem("token", token);
+      // ✅ store token
+      localStorage.setItem("token", res.data.access);
 
-    // ✅ GET USER DETAILS AFTER LOGIN
-    const userRes = await api.get("/api/users/profile/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      // ✅ VERY IMPORTANT — store user manually
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ email })
+      );
 
-    // ✅ STORE USER
-    localStorage.setItem("user", JSON.stringify(userRes.data));
+      alert("Login successful!");
+      navigate("/");
+      window.location.reload();
 
-    alert("Login successful!");
-    navigate("/");
-    window.location.reload();
-
-  } catch (err) {
-    alert("Login failed");
-  }
-};
-
+    } catch (err) {
+      alert("Login failed");
+    }
+  };
 
   return (
     <div style={{ padding: "20px" }}>

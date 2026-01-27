@@ -10,6 +10,12 @@ export default function PlaceOrder() {
   const paymentMethod = localStorage.getItem("paymentMethod");
   const user = JSON.parse(localStorage.getItem("user"));
 
+  if (!user) {
+    alert("Please login again");
+    navigate("/login");
+    return null;
+  }
+
   const itemsPrice = cart.reduce(
     (acc, item) => acc + item.price * item.qty,
     0
@@ -25,8 +31,6 @@ export default function PlaceOrder() {
       cart,
       shippingAddress,
       paymentMethod,
-      itemsPrice,
-      taxPrice,
       totalPrice,
       date: new Date().toLocaleString(),
     };
