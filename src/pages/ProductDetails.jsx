@@ -6,6 +6,7 @@ import { CartContext } from "../context/CartContext";
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [qty, setQty] = useState(1);
   const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
@@ -15,7 +16,6 @@ export default function ProductDetails() {
   if (!product) return <p>Loading...</p>;
 
   let imageUrl = "";
-
   if (product.image) {
     if (product.image.startsWith("http")) {
       imageUrl = product.image;
@@ -24,16 +24,7 @@ export default function ProductDetails() {
     }
   }
 
-  return (
-    <div style={{ padding: "20px" }}>
-      {imageUrl && <img src={imageUrl} alt={product.name} width="300" />}
-
-      <h2>{product.name}</h2>
-      <p>{product.description}</p>
-      <h3>Rs {product.price}</h3>
-
-      <button
-  onClick={() => {
+  const handleAddToCart = () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -42,12 +33,51 @@ export default function ProductDetails() {
       return;
     }
 
-    addToCart(product);
-  }}
->
-  Add to Cart
-</button>
+    addToCart(product, qty);
+  };
 
+  return (
+    <div style={{ padding: "40px", display: "flex", gap: "50px" }}>
+      {/* IMAGE */}
+      <div>
+        {imageUrl && (
+          <img src={imageUrl} alt={product.name} width="350" />
+        )}
+      </div>
+
+      {/* DETAILS */}
+      <div style={{ maxWidth: "500px" }}>
+        <h2>{product.name}</h2>
+        <p>{product.description}</p>
+
+        <h3>Rs {product.price}</h3>
+
+        <p>
+          <b>Status:</b>{" "}
+          {product.count_in_stock > 0 ? "In Stock" : "Out of Stock"}
+        </p>
+
+        {/* QTY SELECT */}
+        {product.count_in_stock > 0 && (
+          <div style={{ margin: "15px 0" }}>
+            <label>Qty: </label>
+            <select
+              value={qty}
+              onChange={(e) => setQty(Number(e.target.value))}
+            >
+              {[...Array(product.count_in_stock).keys()].map((x) => (
+                <option key={x + 1} value={x + 1}>
+                  {x + 1}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        <button onClick={handleAddToCart}>
+          Add To Cart
+        </button>
+      </div>
     </div>
   );
 }
