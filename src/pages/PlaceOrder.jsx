@@ -6,9 +6,9 @@ export default function PlaceOrder() {
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const shippingAddress = JSON.parse(
-    localStorage.getItem("shippingAddress")
-  );
+  const shippingAddress = JSON.parse(localStorage.getItem("shippingAddress"));
+  const paymentMethod = localStorage.getItem("paymentMethod");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const itemsPrice = cart.reduce(
     (acc, item) => acc + item.price * item.qty,
@@ -21,42 +21,32 @@ export default function PlaceOrder() {
   const placeOrderHandler = () => {
     const order = {
       id: Date.now(),
+      userEmail: user.email,
       cart,
       shippingAddress,
+      paymentMethod,
+      itemsPrice,
+      taxPrice,
       totalPrice,
+      date: new Date().toLocaleString(),
     };
 
-    localStorage.setItem("lastOrder", JSON.stringify(order));
+    const existingOrders =
+      JSON.parse(localStorage.getItem("orders")) || [];
+
+    existingOrders.push(order);
+    localStorage.setItem("orders", JSON.stringify(existingOrders));
+
+    localStorage.removeItem("shippingAddress");
+    localStorage.removeItem("paymentMethod");
+
     navigate(`/order/${order.id}`);
   };
 
   return (
-    <div style={{ display: "flex", padding: "40px", gap: "50px" }}>
-      <div style={{ flex: 2 }}>
-        <h2>SHIPPING</h2>
-        <p>
-          {shippingAddress.address}, {shippingAddress.city},{" "}
-          {shippingAddress.pincode}, {shippingAddress.country}
-        </p>
-
-        <h2>ORDER ITEMS</h2>
-        {cart.map((item) => (
-          <p key={item.id}>
-            {item.name} — {item.qty} x Rs {item.price}
-          </p>
-        ))}
-      </div>
-
-      <div style={{ flex: 1 }}>
-        <h2>ORDER SUMMARY</h2>
-        <p>Items: Rs {itemsPrice}</p>
-        <p>Tax: Rs {taxPrice}</p>
-        <h3>Total: Rs {totalPrice}</h3>
-
-        <button onClick={placeOrderHandler}>
-          PLACE ORDER
-        </button>
-      </div>
+    <div style={{ padding: "40px" }}>
+      <h2>PLACE ORDER</h2>
+      <button onClick={placeOrderHandler}>CONFIRM ORDER</button>
     </div>
   );
 }
